@@ -15,6 +15,12 @@ public class ShoppingList {
 	
 	//constructor
 	public ShoppingList(String list_name_input, Date created_input) {
+		this(-1, list_name_input, new Date(java.lang.System.currentTimeMillis()));
+	}
+	
+	//constructor
+	public ShoppingList(long id_input, String list_name_input, Date created_input) {
+		id = id_input;
 		name = list_name_input;
 		created = created_input;
 	}
@@ -36,6 +42,6 @@ public class ShoppingList {
 	public String toString() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 		String dateString = sdf.format(created);
-		return name + " (" + dateString +  ")";
+		return id + ": " + name + " (" + dateString +  ")";
 	}
 }

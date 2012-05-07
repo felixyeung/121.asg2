@@ -100,11 +100,12 @@ public class ShoppinglistActivity extends Activity {
     	if(c.moveToFirst())
     		do {
     			//read using cursor
+    			long id = c.getLong(c.getColumnIndex("_id"));
     			String name = c.getString(c.getColumnIndex("name"));
     			long created = c.getLong(c.getColumnIndex("created"));
     			
     			//build a new object from DB data.
-    			ShoppingList list = new ShoppingList(name, new Date(created));
+    			ShoppingList list = new ShoppingList(id, name, new Date(created));
 
     			//append to hooked arraylist
     			shoppingLists.add(0, list);
