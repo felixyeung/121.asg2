@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ShoppinglistActivity extends Activity {
 	
@@ -49,6 +51,7 @@ public class ShoppinglistActivity extends Activity {
         
         shoppingListsView.setAdapter(saa);
         
+        
         //Code to handle adding of a new shopping list.
         //DB interactions are done in here.
         newListSubmit = (Button)findViewById(R.id.create_list);
@@ -68,6 +71,17 @@ public class ShoppinglistActivity extends Activity {
             }
         });
         
+        //Code to allow clickable list items
+        shoppingListsView.setOnItemClickListener(new OnItemClickListener() {
+        	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        		//capture list from position in listview
+        		ShoppingList list = shoppingLists.get(position);
+        		
+        		//extracted Id, we can toast!
+        		Toast.makeText(getApplicationContext(), "Clicked " + list.getName() + "!", Toast.LENGTH_SHORT).show();
+        	}
+        });
+
         //Code to handle long press
         registerForContextMenu(shoppingListsView);
         
@@ -126,5 +140,35 @@ public class ShoppinglistActivity extends Activity {
       menu.add(0, Menu.FIRST, Menu.NONE, "Delete");
     }
     
-    //if we click on a long press option, what happens?
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {  
+    	super.onContextItemSelected(item);
+    	switch (item.getItemId()) {
+    		//case DELETE
+    		case (Menu.FIRST): {
+    			//prepare a menu item object
+    			AdapterView.AdapterContextMenuInfo menuInfo;
+    			menuInfo =(AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+    			
+    			//capture the positional index of our shoppping list in our list view;
+    			int index = menuInfo.position;
+    			
+    			//resolve database id from position
+    			ShoppingList list = shoppingLists.get(index);
+    			long list_id = list.getId();
+    			
+    			//get rid!
+    			deleteList(list_id);
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    //if we click on a long press option, what happens?\
+    
+    //remove a list
+    private void deleteList(long id) {
+    	dba.deleteList(id);
+    	updateArray();
+    }
 }

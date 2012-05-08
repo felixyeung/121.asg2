@@ -71,6 +71,9 @@ public class ShoppinglistDBAdapter {
   }
   
   //DELETE LIST
+  public boolean deleteList(long id) {
+	  return db.delete(LISTS_TABLE, "_id = " + id , null) > 0;
+  }
   
   //UPDATE LIST
   
