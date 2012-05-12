@@ -18,6 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ViewShoppingListActivity" android:label="View one list"></activity>
     </application>
 
 </manifest>

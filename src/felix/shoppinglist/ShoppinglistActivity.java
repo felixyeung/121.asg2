@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -78,7 +79,10 @@ public class ShoppinglistActivity extends Activity {
         		ShoppingList list = shoppingLists.get(position);
         		
         		//extracted Id, we can toast!
-        		Toast.makeText(getApplicationContext(), "Clicked " + list.getName() + "!", Toast.LENGTH_SHORT).show();
+        		//Toast.makeText(getApplicationContext(), "Clicked " + list.getName() + "!", Toast.LENGTH_SHORT).show();
+        		
+        		Intent intent = new Intent(ShoppinglistActivity.this, ViewShoppingListActivity.class);
+        		startActivity(intent);
         	}
         });
 
